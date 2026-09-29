@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedPulse PKU | Integrated Hospital Intelligence & Clinical Platform</title>
+  <meta name="description" content="Sistem Dashboard Terintegrasi RS PKU Muhammadiyah - Doctor Clinical Workstation & Executive Management Intelligence">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="/assets/index-CkwRhlxu.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DpW3ejLD.css">
+</head>
+<body>
+  <!-- Top Global Header -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="brand-logo">
+        <div class="brand-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">MedPulse<span class="brand-badge">PKU</span></span>
+          <span class="brand-subtitle">RS PKU Muhammadiyah • Smart Healthcare Portal</span>
+        </div>
+      </div>
+      
+      <div class="portal-context-badge">
+        <span class="portal-pill-indicator doctor">
+          <span class="portal-dot"></span>
+          Doctor Clinical Workspace
+        </span>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <!-- Live Sync & API Status Pill -->
+      <button class="api-status-trigger" id="apiStatusBtn" title="Lihat Status Integrasi External API (SIMRS & BPJS)">
+        <span class="status-dot pulsing"></span>
+        <span class="api-label">SIMRS & BPJS V-Claim: <strong class="text-emerald">SYNCED (24ms)</strong></span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+      </button>
+
+      <!-- Quick User Profile -->
+      <div class="user-pill" id="userProfilePill">
+        <div class="user-avatar" id="userAvatar">DS</div>
+        <div class="user-meta">
+          <span class="user-name" id="userName">dr. Surya Sp.JP</span>
+          <span class="user-unit" id="userUnit">Spesialis Jantung & Pembuluh Darah</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- External API Gateway Drawer / Modal -->
+  <aside class="api-drawer" id="apiDrawer">
+    <div class="drawer-header">
+      <div class="drawer-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
+        <span>External API Gateway & Bridging Monitor</span>
+      </div>
+      <button class="drawer-close" id="closeApiDrawer">&times;</button>
+    </div>
+    <div class="drawer-body">
+      <p class="drawer-desc">Monitoring real-time bridging antara Frontend, BFF Gateway, SIMRS Rumah Sakit, dan Layanan Kemenkes/BPJS.</p>
+      
+      <div class="api-service-card ok">
+        <div class="svc-header">
+          <span class="svc-name">SIMRS Core (Evotech Engine)</span>
+          <span class="svc-badge connected">Connected</span>
+        </div>
+        <div class="svc-details">
+          <span>Latency: <strong>18ms</strong></span>
+          <span>Cache TTL: <strong>30s (Redis)</strong></span>
+          <span>Endpoint: <code>/api/v1/simrs/patient-queue</code></span>
+        </div>
+      </div>
+
+      <div class="api-service-card ok">
+        <div class="svc-header">
+          <span class="svc-name">BPJS V-Claim 2.0 Bridging</span>
+          <span class="svc-badge connected">Bridged</span>
+        </div>
+        <div class="svc-details">
+          <span>Auth: <strong>HMAC-SHA256 Timestamped</strong></span>
+          <span>Pending Claims: <strong>42 Klaim</strong></span>
+          <span>Endpoint: <code>/api/v1/bpjs/sep-validation</code></span>
+        </div>
+      </div>
+
+      <div class="api-service-card ok">
+        <div class="svc-header">
+          <span class="svc-name">SatuSehat Kemenkes (HL7 FHIR)</span>
+          <span class="svc-badge connected">Synced</span>
+        </div>
+        <div class="svc-details">
+          <span>RME Compliance: <strong>Permenkes 24/2022</strong></span>
+          <span>Encounter Sync: <strong>Active</strong></span>
+        </div>
+      </div>
+
+      <div class="api-service-card ok">
+        <div class="svc-header">
+          <span class="svc-name">Smart Bed IoT & Telemetry</span>
+          <span class="svc-badge live">Live Telemetry</span>
+        </div>
+        <div class="svc-details">
+          <span>Beds Monitored: <strong>184 Beds</strong></span>
+          <span>Protocol: <strong>MQTT / WebSocket SSE</strong></span>
+        </div>
+      </div>
+
+      <div class="bff-banner">
+        <h4>💡 Mengapa Backend-For-Frontend (BFF)?</h4>
+        <p>BFF menyembunyikan kredensial rahasia BPJS & SIMRS dari browser, melakukan agregasi 4 API menjadi 1 payload responsif, serta melindungi server SIMRS dari overload dengan Redis Caching.</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main View Container -->
+  <main class="main-viewport" id="mainViewport">
+    <!-- DOCTOR DASHBOARD VIEW -->
+    <div class="dashboard-root active" id="doctorDashboardRoot"></div>
+
+    <!-- MANAGEMENT DASHBOARD VIEW -->
+    <div class="dashboard-root" id="managementDashboardRoot"></div>
+  </main>
+
+  <!-- Interactive Patient Detail Modal -->
+  <div class="modal-backdrop" id="patientModalBackdrop">
+    <div class="modal-dialog" id="patientModalDialog">
+      <!-- Injected dynamically via JS -->
+    </div>
+  </div>
+
+  <!-- Notification Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+</body>
+</html>
